@@ -4,7 +4,7 @@
 
 {% block content %}
         {% for article in articles %}
-            <div class="box float-sm-left article ">
+            <div class="box float-sm-left article text-center">
                 <a href="{% url 'webapp:article_view' article.pk %}">
                     <h5>№{{ article.pk }}. {{ article.title }}</h5><br>
     {#                   {% if perms.webapp.change_gallery  or gallery.author == request.user %}#}
@@ -17,5 +17,4 @@
             </div>
         {% endfor %}
     </div>
-
 {% endblock %}

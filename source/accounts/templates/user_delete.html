@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Удаление статьи{% endblock %}
+
+{% block menu %}
+<a class="text-white text-center px-3" href="{% url 'webapp:articles_view' %}">На главную</a>
+{% endblock %}
+
+{% block content %}
+    <div class="coL col-lg-12 mt-5">
+        <h1 class="pt-4">Вы действительно хотите удалить пользователя: # <b class="text-primary">{{ user.get_username}}</b> ?</h1>
+    </div>
+    <div class="row">
+        <form method="POST" action="{% url "accounts:delete" user.pk %}" class="text-center">
+            {% csrf_token %}
+        <div class="coL col-lg-3 ml-5 mt-1">
+            <a href="{% url "accounts:delete" user.pk %}" >
+                <button type="submit"  class="btn btn-danger">Delete</button>
+            </a>
+        </div>
+        </form>
+        <div class="coL col-lg-3  mt-1">
+            <a href="{% url 'accounts:users' %}" >
+                <button type="submit"  class="btn btn-primary">Отмена</button>
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

@@ -33,7 +33,6 @@
 }
 
 .box {
-    text-align: center;
     background-color: #f7f7f7 ;
     box-sizing: border-box;
     border: solid 1px gray;
@@ -57,4 +56,19 @@ a {
 
 .clear {
     clear: both;
+}
+
+.word {
+    color: #f7f7f7;
+    text-shadow: black 2px 0px, black 2px 1px, black 0px 3px, black -1px 1px, black -1px 0px,
+    black -1px -1px, black 0px -1px, black 1px -1px;
+    font-weight: bolder;
+}
+
+.table {
+    display: table;
+}
+
+.cell{
+    display: table-cell;
 }

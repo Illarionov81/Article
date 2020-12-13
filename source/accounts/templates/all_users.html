@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block menu %}
+        <a class="text-white text-center px-3"  href="{% url 'webapp:articles_view' %}" >На главную</a>
+{% endblock %}
+
+<h1 class="word">All Users:</h1>
+{% block content %}
+    <h3 class="word text-center">All Users:</h3>
+    <div class="box">
+        {% for user in user_list %}
+            <div class="table">
+                <div class="cell text-left">
+                    <h5><a href="{% url 'accounts:detail' user.pk %}">№{{ user.pk }}. {{ user.get_username }}</a></h5>
+                </div>
+                <div class="cell text-right">
+                    <a href="{% url 'accounts:change' user.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
+                        <a href="{% url 'accounts:delete' user.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
+                </div>
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Пользователь{% endblock %}
+
+{% block menu %}
+    <a class="text-white text-center px-3" href="{% url 'webapp:articles_view' %}">На главную</a>
+    {% if request.user == user_obj %}
+        <a class="text-white text-center px-3" href="{% url 'accounts:change' user_obj.pk %}">Редактирование личных данных</a>
+        <a class="text-white text-center px-3" href="{% url "accounts:password_change" user_obj.pk %}">Смена пароля</a>
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        <h1 class="ml-5 pt-5">Личная страница пользователя {{ user_obj.get_full_name|default:user_obj.username }}</h1>
+        <p>Login: {{ user.username }}</p>
+        <p>Имя: {{ user.first_name }}</p>
+        <p>Фамилия: {{ user.last_name }}</p>
+        <p>Почта: {{ user_obj.email }}</p>
+    </div>
+{% endblock %}
