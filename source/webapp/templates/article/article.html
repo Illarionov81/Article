@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block menu %}
+<a class="text-white text-center px-3" href="{% url 'webapp:articles_view' %}">На главную</a>
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        <h4 class="pt-1 mt-1"><b>Title: {{ article.title }}.
+{#            {% if perms.webapp.change_gallery  or gallery.author == request.user %}#}
+            <a href="{% url 'webapp:article_update' article.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
+{#            {% endif %}#}
+{#            {% if perms.webapp.delete_gallery or gallery.author == request.user  %}#}
+            <a href="{% url 'webapp:article_delete' article.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
+{#            {% endif %}#}
+        </b></h4>
+        <p>Description:</p>
+            <div class="box">
+                {{ article.description }}
+            </div>
+        <img src="{{ article.image.url }}" width="100%" height="100%" alt="Foto"><br>
+    </div>
+{% endblock %}

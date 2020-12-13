@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block menu %}
+        <a class="text-white text-center px-3"  href="{% url 'webapp:articles_view' %}" >Отмена</a>
+{% endblock %}
+
+{% block title %}Write article{% endblock %}
+
+{% block content %}
+    <h3 class=" col-md-6 pt-4"><b>Write article</b></h3>
+    {% include 'partial/form.html' with  form_method='post' enctype="multipart/form-data"%}
+{% endblock %}
