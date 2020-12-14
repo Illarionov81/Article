@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from webapp.views import CategoryCreate, CategoryView, Categories, CategoryUpdate, CategoryDelete, CategoryNewsView
+from webapp.views import CategoryCreate, Categories, CategoryUpdate, CategoryDelete, CategoryNewsView
 from webapp.views.article_views import ArticleView, Articles, ArticleUpdate, ArticleDelete, ArticleCreate
 from webapp.views.main_category import MainCategoryCreate, MainCategories, MainCategoryView, MainCategoryUpdate, \
     MainCategoryDelete
@@ -14,12 +14,11 @@ urlpatterns = [
     path('article/<int:pk>/update', ArticleUpdate.as_view(), name='article_update'),
     path('article/<int:pk>/delete', ArticleDelete.as_view(), name='article_delete'),
 
-    path('category/', Categories.as_view(), name='categories_view'),
+    path('categories/', Categories.as_view(), name='categories_view'),
     path('category/create', CategoryCreate.as_view(), name='category_create'),
-    path('category/<int:pk>/', CategoryView.as_view(), name='category_view'),
+    path('category/<int:pk>/', CategoryNewsView.as_view(), name='category_news'),
     path('category/<int:pk>/update', CategoryUpdate.as_view(), name='category_update'),
     path('category/<int:pk>/delete', CategoryDelete.as_view(), name='category_delete'),
-    path('category/<int:pk>/news', CategoryNewsView.as_view(), name='category_news'),
 
     path('', MainCategories.as_view(), name='main_categories_view'),
     path('main_category/create', MainCategoryCreate.as_view(), name='main_category_create'),

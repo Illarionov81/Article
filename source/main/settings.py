@@ -123,8 +123,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'webapp:articles_view'
-LOGOUT_REDIRECT_URL = 'webapp:articles_view'
+LOGIN_REDIRECT_URL = 'webapp:main_categories_view'
+LOGOUT_REDIRECT_URL = 'webapp:main_categories_view'
 LOGIN_URL = 'accounts:login'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')

@@ -3,7 +3,7 @@
 {% block title %}Пользователь{% endblock %}
 
 {% block menu %}
-    <a class="text-white text-center px-3" href="{% url 'webapp:articles_view' %}">На главную</a>
+    <a class="text-white text-center px-3" href="{% url 'webapp:main_categories_view' %}">На главную</a>
     {% if request.user == user_obj %}
         <a class="text-white text-center px-3" href="{% url 'accounts:change' user_obj.pk %}">Редактирование личных данных</a>
         <a class="text-white text-center px-3" href="{% url "accounts:password_change" user_obj.pk %}">Смена пароля</a>

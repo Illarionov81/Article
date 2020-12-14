@@ -14,20 +14,7 @@ class CategoryCreate(CreateView):
     def form_valid(self, form):
         category = form.save(commit=False)
         category.save()
-        return redirect('webapp:category_view', pk=category.pk)
-
-
-class CategoryView(DetailView):
-    template_name = 'category/category.html'
-    model = Category
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        category = get_object_or_404(Category, pk=self.kwargs.get('pk'))
-        categories = Category.objects.filter(parent_id=category.pk)
-        context['categories'] = categories
-        context['category'] = category
-        return context
+        return redirect('webapp:category_news', pk=category.pk)
 
 
 class CategoryNewsView(DetailView):
@@ -47,12 +34,6 @@ class Categories(ListView):
     template_name = 'category/categories_view.html'
     model = Category
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        categories = Category.objects.filter(parent_id=None)
-        context['categories'] = categories
-        return context
-
 
 class CategoryUpdate(UpdateView):
     template_name = 'category/category_update.html'
@@ -60,7 +41,7 @@ class CategoryUpdate(UpdateView):
     model = Category
 
     def get_success_url(self):
-        return reverse('webapp:category_view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:category_news', kwargs={'pk': self.object.pk})
 
 
 class CategoryDelete(DeleteView):

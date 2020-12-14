@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+    <h1 class="word text-center pt-1 mt-1">All Articles</h1>
         {% for article in articles %}
             <div class="box float-sm-left article text-center">
                 <a href="{% url 'webapp:article_view' article.pk %}">

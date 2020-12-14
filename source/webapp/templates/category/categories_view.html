@@ -8,9 +8,9 @@
 
 {% block content %}
     <h1 class="word text-center">Новостной портал. Разделы:</h1>
-        {% for category in categories %}
+        {% for category in category_list %}
             <div class="box float-sm-left article text-center">
-                <a href="{% url 'webapp:category_view' category.pk %}">
+                <a href="{% url 'webapp:category_news' category.pk %}">
                     <h5>№{{ category.pk }}. {{ category.title }}</h5></a><br>
     {#                   {% if perms.webapp.change_gallery  or gallery.author == request.user %}#}
                         <a href="{% url 'webapp:category_update' category.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>

@@ -1,6 +1,6 @@
 from django import forms
 
-from webapp.models import Article, Category
+from webapp.models import Article, Category, MainCategory
 
 
 class ArticleForm(forms.ModelForm):
@@ -17,5 +17,5 @@ class CategoryForm(forms.ModelForm):
 
 class MainCategoryForm(forms.ModelForm):
     class Meta:
-        model = Category
+        model = MainCategory
         fields = ['title']
