@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block menu %}
+        <a class="text-white text-center px-3" href="{% url 'webapp:category_view' category.pk %}" >Отмена</a>
+{% endblock %}
+
+{% block title %} Update Category{% endblock %}
+
+{% block content %}
+    <h3 class=" col-md-6 pt-4"><b>Update Category:</b></h3>
+    {% include 'partial/form.html' with  form_method='post' enctype="multipart/form-data"%}
+{% endblock %}

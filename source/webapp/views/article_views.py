@@ -15,6 +15,7 @@ class ArticleCreate(CreateView):
         article = form.save(commit=False)
         article.user_id = self.request.user
         article.save()
+        form.save_m2m()
         return redirect('webapp:article_view', pk=article.pk)
 
 
