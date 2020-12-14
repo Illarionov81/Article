@@ -19,10 +19,21 @@ class Article(models.Model):
         verbose_name_plural = 'Статьи'
 
 
+class MainCategory(models.Model):
+    title = models.CharField(max_length=200, verbose_name='Заголовок', )
+
+    def __str__(self):
+        return "{}. {}".format(self.pk, self.title)
+
+    class Meta:
+        verbose_name = 'Основная Категория'
+        verbose_name_plural = 'Основные Категории'
+
+
 class Category(models.Model):
     title = models.CharField(max_length=200, verbose_name='Заголовок',)
-    parent_id = models.OneToOneField('webapp.Category', on_delete=models.PROTECT, null=True, blank=True,
-                                     verbose_name='Основная категория')
+    parent_id = models.ForeignKey('webapp.MainCategory', on_delete=models.PROTECT, null=False, blank=False,
+                                  verbose_name='Основная категория')
 
     def __str__(self):
         return "{}. {}".format(self.pk, self.title)
