@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block menu %}
+    {% if user.is_authenticated %}
         <a class="text-white text-center px-3" href="{% url 'webapp:main_category_view' maincategory.pk %}" >Отмена</a>
+    {% endif %}
 {% endblock %}
 
 {% block title %} Update Main Category{% endblock %}

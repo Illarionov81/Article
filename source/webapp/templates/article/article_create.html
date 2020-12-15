@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block menu %}
+    {% if user.is_authenticated %}
         <a class="text-white text-center px-3"  href="{% url 'webapp:articles_view' %}" >Отмена</a>
         <a class="text-white text-center px-3"  href="{% url 'webapp:main_categories_view' %}" >На главную</a>
+    {% endif %}
 {% endblock %}
 
 {% block title %}Write article{% endblock %}

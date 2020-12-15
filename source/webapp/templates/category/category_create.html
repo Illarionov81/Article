@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block menu %}
+    {% if user.is_authenticated %}
         <a class="text-white text-center px-3"  href="{% url 'webapp:categories_view' %}" >Отмена</a>
+    {% endif %}
 {% endblock %}
 
 {% block title %}New Category{% endblock %}

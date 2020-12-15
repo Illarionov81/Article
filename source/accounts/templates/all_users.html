@@ -3,7 +3,9 @@
 {% block title %}Articles{% endblock %}
 
 {% block menu %}
+    {% if user.is_authenticated %}
         <a class="text-white text-center px-3"  href="{% url 'webapp:main_categories_view' %}" >На главную</a>
+    {% endif %}
 {% endblock %}
 
 <h1 class="word">All Users:</h1>
@@ -16,8 +18,12 @@
                     <h5><a href="{% url 'accounts:detail' user.pk %}">№{{ user.pk }}. {{ user.get_username }}</a></h5>
                 </div>
                 <div class="cell text-right">
-                    <a href="{% url 'accounts:change' user.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
+                    {% if user == request.user %}
+                        <a href="{% url 'accounts:change' user.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
+                    {% endif %}
+                    {% if perms.auth.delete_user %}
                         <a href="{% url 'accounts:delete' user.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
+                    {% endif %}
                 </div>
             </div>
             <hr>

@@ -26,14 +26,14 @@ class MainCategory(models.Model):
         return "{}. {}".format(self.pk, self.title)
 
     class Meta:
-        verbose_name = 'Основная Категория'
-        verbose_name_plural = 'Основные Категории'
+        verbose_name = 'Main_category'
+        verbose_name_plural = 'Main_categories'
 
 
 class Category(models.Model):
     title = models.CharField(max_length=200, verbose_name='Заголовок',)
     parent_id = models.ForeignKey('webapp.MainCategory', on_delete=models.PROTECT, null=False, blank=False,
-                                  verbose_name='Основная категория')
+                                  verbose_name='Main category')
 
     def __str__(self):
         return "{}. {}".format(self.pk, self.title)

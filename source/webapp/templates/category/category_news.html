@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 
 {% block menu %}
-<a class="text-white text-center px-3" href="{% url 'webapp:main_categories_view' %}">На главную</a>
+    {% if user.is_authenticated %}
+        <a class="text-white text-center px-3" href="{% url 'webapp:main_categories_view' %}">На главную</a>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
     <h1 class="word text-center">Тема:</h1>
     <div class="box">
         <h3 class="pt-1  text-center  mt-1"><b>{{ category.title }}.</b>
-{#            {% if perms.webapp.change_gallery  or gallery.author == request.user %}#}
-            <a href="{% url 'webapp:category_update' category.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
-{#            {% endif %}#}
-{#            {% if perms.webapp.delete_gallery or gallery.author == request.user  %}#}
-            <a href="{% url 'webapp:category_delete' category.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
-{#            {% endif %}#}
+            {% if perms.webapp.change_category %}
+                <a href="{% url 'webapp:category_update' category.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
+            {% endif %}
+            {% if perms.webapp.delete_category  %}
+                <a href="{% url 'webapp:category_delete' category.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
+            {% endif %}
         </h3>
     </div>
     <h1 class="word text-center">Новости:</h1>
@@ -21,13 +23,12 @@
         <div class="box float-sm-left article text-center">
                 <a href="{% url 'webapp:article_view' article.pk %}">
                     <h5>№{{ article.pk }}. {{ article.title }}</h5></a><br>
-    {#                   {% if perms.webapp.change_gallery  or gallery.author == request.user %}#}
-                        <a href="{% url 'webapp:article_update' article.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
-                        {#            {% endif %}#}
-                        {#            {% if perms.webapp.delete_gallery or gallery.author == request.user  %}#}
-                        <a href="{% url 'webapp:article_delete' article.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
-                        {#            {% endif %}#}
+                {% if perms.webapp.change_article %}
+                    <a href="{% url 'webapp:article_update' article.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
+                {% endif %}
+                {% if perms.webapp.delete_article  %}
+                    <a href="{% url 'webapp:article_delete' article.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
+                {% endif %}
             </div>
     {% endfor %}
-
 {% endblock %}

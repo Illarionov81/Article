@@ -25,31 +25,31 @@
                     {% block menu %} {% endblock %}
                         <a class="text-white text-center px-3" href="{% url 'accounts:detail' request.user.pk %}">Hi {{ request.user.username }}</a>
                         <a class="text-white text-center px-3" href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">Logout</a>
+                        <div class="dropdown">
+                        <button class="btn btn-primary text-white dropdown-toggle" type="button"
+                            id="about-us" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">Look all...</button>
+                        <div class="dropdown-menu" aria-labelledby="about-us">
+                            <a class="dropdown-item" href="{% url 'webapp:articles_view' %}">Articles</a>
+                            <a class="dropdown-item" href="{% url 'webapp:main_categories_view' %}"> Main Category</a>
+                            <a class="dropdown-item" href="{% url 'webapp:categories_view' %}">Category</a>
+                            <a class="dropdown-item" href="{% url 'accounts:users' %}">Users</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-primary text-white dropdown-toggle" type="button"
+                        id="new" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">Create...</button>
+                        <div class="dropdown-menu" aria-labelledby="new">
+                            <a class="dropdown-item"  href="{% url 'webapp:article_create' %}">Write article</a>
+                            <a class="dropdown-item"  href="{% url 'webapp:category_create' %}">New category</a>
+                            <a class="dropdown-item"  href="{% url 'webapp:main_category_create' %}">New Main category</a>
+                        </div>
+                    </div>
                 {% else %}
                     <a class="text-white text-center px-3" href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">Login</a>
                     <a class="text-white text-center px-3"href="{% url 'accounts:create' %}?next={{ request.get_full_path }}">Sing Up</a>
                 {% endif %}
-                <div class="dropdown">
-                    <button class="btn btn-primary text-white dropdown-toggle" type="button"
-                        id="about-us" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">Look all...</button>
-                    <div class="dropdown-menu" aria-labelledby="about-us">
-                        <a class="dropdown-item" href="{% url 'webapp:articles_view' %}">Articles</a>
-                        <a class="dropdown-item" href="{% url 'webapp:main_categories_view' %}"> Main Category</a>
-                        <a class="dropdown-item" href="{% url 'webapp:categories_view' %}">Category</a>
-                        <a class="dropdown-item" href="{% url 'accounts:users' %}">Users</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <button class="btn btn-primary text-white dropdown-toggle" type="button"
-                    id="new" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">Create...</button>
-                    <div class="dropdown-menu" aria-labelledby="new">
-                        <a class="dropdown-item"  href="{% url 'webapp:article_create' %}">Write article</a>
-                        <a class="dropdown-item"  href="{% url 'webapp:category_create' %}">New category</a>
-                        <a class="dropdown-item"  href="{% url 'webapp:main_category_create' %}">New Main category</a>
-                    </div>
-                </div>
             </div>
         </div>
     </nav>

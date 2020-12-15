@@ -1,5 +1,5 @@
 from django.contrib.auth import login, get_user_model
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
@@ -8,7 +8,7 @@ from django.views.generic import CreateView, DetailView, UpdateView, ListView, D
 from accounts.forms import MyUserCreationForm, PasswordChangeForm, UserChangeForm
 
 
-class AllUserView(ListView):
+class AllUserView(LoginRequiredMixin, ListView):
     template_name = 'all_users.html'
     model = User
 
@@ -32,7 +32,7 @@ class RegisterView(CreateView):
         return next_url
 
 
-class UserDetailView(DetailView):
+class UserDetailView(LoginRequiredMixin, DetailView):
     model = get_user_model()
     template_name = 'user_detail.html'
     context_object_name = 'user_obj'
@@ -72,7 +72,8 @@ class UserChangeView(UserPassesTestMixin, UpdateView):
         return reverse('accounts:detail', kwargs={'pk': self.object.pk})
 
 
-class UserDelete(DeleteView):
+class UserDelete(PermissionRequiredMixin, DeleteView):
     template_name = 'user_delete.html'
     model = User
     success_url = reverse_lazy('accounts:users')
+    permission_required = 'auth.delete_user'
