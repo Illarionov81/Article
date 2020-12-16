@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.db.models import Model
 from django.http import HttpResponseRedirect
+from django.template.response import TemplateResponse
 from django.test import TestCase
 from django.urls import reverse
 
@@ -173,3 +174,67 @@ class LoginCategoryTestCase(TestCase):
     def test_article_create_success_data(self):
         self.assertEqual(self.category.title, self.data['title'])
         self.assertEqual(self.category.parent_id.pk, self.data['parent_id'])
+
+
+class LoginCategoryArticleTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        call_command('loaddata', 'fixtures/auth.json', verbosity=0)
+        call_command('loaddata', 'fixtures/dump.json', verbosity=0)
+        User: Model = get_user_model()
+        user, created = User.objects.get_or_create(username='admin1')
+        if created:
+            user.set_password('admin1')
+            user.save()
+        cls.user = user
+
+    def setUp(self) -> None:
+        self.client.login(username='admin1', password='admin1')
+        self.category = Category.objects.first()
+        url = reverse('webapp:category_news', kwargs={'pk': self.category.pk})
+        self.response = self.client.get(url)
+
+    def tearDown(self) -> None:
+        self.client.logout()
+
+    def test_get_category_success_response(self):
+        self.assertEqual(self.response.status_code, 200)
+        self.assertEqual(type(self.response), TemplateResponse)
+
+    def test_get_category_success_data(self):
+        self.assertIn('articles', self.response.context)
+        self.assertIn('category', self.response.context)
+        self.assertTrue(len(self.response.context['articles']) >= 1)
+
+
+class LoginCategoryMainCategoryTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        call_command('loaddata', 'fixtures/auth.json', verbosity=0)
+        call_command('loaddata', 'fixtures/dump.json', verbosity=0)
+        User: Model = get_user_model()
+        user, created = User.objects.get_or_create(username='admin1')
+        if created:
+            user.set_password('admin1')
+            user.save()
+        cls.user = user
+
+    def setUp(self) -> None:
+        self.client.login(username='admin1', password='admin1')
+        self.main_category = MainCategory.objects.first()
+        url = reverse('webapp:main_category_view', kwargs={'pk': self.main_category.pk})
+        self.response = self.client.get(url)
+
+    def tearDown(self) -> None:
+        self.client.logout()
+
+    def test_get_main_category_success_response(self):
+        self.assertEqual(self.response.status_code, 200)
+        self.assertEqual(type(self.response), TemplateResponse)
+
+    def test_get_main_category_success_data(self):
+        self.assertIn('maincategory', self.response.context)
+        self.assertIn('categories', self.response.context)
+        self.assertTrue(len(self.response.context['categories']) >= 1)
