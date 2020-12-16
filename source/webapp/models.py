@@ -5,7 +5,7 @@ from django.db import models
 class Article(models.Model):
     title = models.CharField(max_length=200, verbose_name='Заголовок',)
     description = models.TextField(max_length=3000, verbose_name='Описание')
-    category_id = models.ManyToManyField('webapp.Category', related_name='articles', blank=True,
+    category_id = models.ManyToManyField('webapp.Category', related_name='articles',
                                          verbose_name='Категория')
     user_id = models.ForeignKey(get_user_model(), on_delete=models.SET_DEFAULT, default=1,
                                 related_name='articles', verbose_name='Пользователь')

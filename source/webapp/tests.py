@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.test import TestCase
 from django.urls import reverse
 
-from webapp.models import Category, Article
+from webapp.models import Category, Article, MainCategory
 
 GET_URL_PK = [
     'webapp:article_view',
@@ -68,3 +68,108 @@ class UnLoginTestCase(TestCase):
         self.assertEqual(response.url, redirect_url)
 
 
+class LoginArticleTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        call_command('loaddata', 'fixtures/auth.json', verbosity=0)
+        call_command('loaddata', 'fixtures/dump.json', verbosity=0)
+        User: Model = get_user_model()
+        user, created = User.objects.get_or_create(username='admin1')
+        if created:
+            user.set_password('admin1')
+            user.save()
+        cls.user = user
+
+    def setUp(self) -> None:
+        self.client.login(username='admin1', password='admin1')
+        url = reverse('webapp:article_create')
+        self.category = Category.objects.first()
+        self.data = {'title': 'TestArticle', 'description': 'TestDescription',
+                     'category_id': self.category.pk, 'user_id': self.user}
+        self.response = self.client.post(url, self.data)
+        self.article = Article.objects.order_by('pk').last()
+
+    def tearDown(self) -> None:
+        self.client.logout()
+
+    def test_create_article_success(self):
+        self.assertEqual(self.response.status_code, 302)
+        self.assertEqual(type(self.response), HttpResponseRedirect)
+        redirect_url = reverse('webapp:article_view', kwargs={'pk': self.article.pk})
+        self.assertEqual(self.response.url, redirect_url)
+
+    def test_article_create_success_data(self):
+        article_category = self.article.category_id.values_list('pk')
+        self.assertEqual(self.article.title, self.data['title'])
+        self.assertEqual(self.article.description, self.data['description'])
+        self.assertIn(self.category.pk, article_category[0])
+        self.assertEqual(self.article.user_id, self.data['user_id'])
+
+
+class LoginMainCategoryTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        call_command('loaddata', 'fixtures/auth.json', verbosity=0)
+        call_command('loaddata', 'fixtures/dump.json', verbosity=0)
+        User: Model = get_user_model()
+        user, created = User.objects.get_or_create(username='admin1')
+        if created:
+            user.set_password('admin1')
+            user.save()
+        cls.user = user
+
+    def setUp(self) -> None:
+        self.client.login(username='admin1', password='admin1')
+        url = reverse('webapp:main_category_create')
+        self.data = {'title': 'TestMainCategory'}
+        self.response = self.client.post(url, self.data)
+        self.main_category = MainCategory.objects.order_by('pk').last()
+
+    def tearDown(self) -> None:
+        self.client.logout()
+
+    def test_create_article_success(self):
+        self.assertEqual(self.response.status_code, 302)
+        self.assertEqual(type(self.response), HttpResponseRedirect)
+        redirect_url = reverse('webapp:main_category_view', kwargs={'pk': self.main_category.pk})
+        self.assertEqual(self.response.url, redirect_url)
+
+    def test_article_create_success_data(self):
+        self.assertEqual(self.main_category.title, self.data['title'])
+
+
+class LoginCategoryTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        call_command('loaddata', 'fixtures/auth.json', verbosity=0)
+        call_command('loaddata', 'fixtures/dump.json', verbosity=0)
+        User: Model = get_user_model()
+        user, created = User.objects.get_or_create(username='admin1')
+        if created:
+            user.set_password('admin1')
+            user.save()
+        cls.user = user
+
+    def setUp(self) -> None:
+        self.client.login(username='admin1', password='admin1')
+        url = reverse('webapp:category_create')
+        main_category = MainCategory.objects.first()
+        self.data = {'title': 'TestCategory', 'parent_id': main_category.pk}
+        self.response = self.client.post(url, self.data)
+        self.category = Category.objects.order_by('pk').last()
+
+    def tearDown(self) -> None:
+        self.client.logout()
+
+    def test_create_article_success(self):
+        self.assertEqual(self.response.status_code, 302)
+        self.assertEqual(type(self.response), HttpResponseRedirect)
+        redirect_url = reverse('webapp:category_news', kwargs={'pk': self.category.pk})
+        self.assertEqual(self.response.url, redirect_url)
+
+    def test_article_create_success_data(self):
+        self.assertEqual(self.category.title, self.data['title'])
+        self.assertEqual(self.category.parent_id.pk, self.data['parent_id'])
