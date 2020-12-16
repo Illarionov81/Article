@@ -20,6 +20,10 @@
         <div class="box">
             {{ article.description }}
         </div>
+    {% if  article.image  %}
         <img src="{{ article.image.url }}" width="100%" height="100%" alt="Foto"><br>
+    {% else %}
+    <p>No Photo </p>
+    {% endif %}
     </div>
 {% endblock %}
