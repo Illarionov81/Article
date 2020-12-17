@@ -1,12 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.db.models import Model
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.template.response import TemplateResponse
 from django.test import TestCase
 from django.urls import reverse
 
 from webapp.models import Category, Article, MainCategory
+
+NOT_EXIST_PK = 0
 
 GET_URL_PK = [
     'webapp:article_view',
@@ -238,3 +240,48 @@ class LoginCategoryMainCategoryTestCase(TestCase):
         self.assertIn('maincategory', self.response.context)
         self.assertIn('categories', self.response.context)
         self.assertTrue(len(self.response.context['categories']) >= 1)
+
+
+class LoginGetNotExistPkCategoryTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        call_command('loaddata', 'fixtures/auth.json', verbosity=0)
+        call_command('loaddata', 'fixtures/dump.json', verbosity=0)
+        User: Model = get_user_model()
+        user, created = User.objects.get_or_create(username='admin1')
+        if created:
+            user.set_password('admin1')
+            user.save()
+        cls.user = user
+
+    def setUp(self) -> None:
+        self.client.login(username='admin1', password='admin1')
+
+    def tearDown(self) -> None:
+        self.client.logout()
+
+    def test_get_not_exist_category_pk_response(self):
+        url = reverse('webapp:category_news', kwargs={'pk': NOT_EXIST_PK})
+        self.response = self.client.get(url)
+        self.assertEqual(self.response.status_code, 404)
+        self.assertEqual(type(self.response), HttpResponseNotFound)
+
+    def test_get_not_exist_main_category_pk_response(self):
+        url = reverse('webapp:main_category_view', kwargs={'pk': NOT_EXIST_PK})
+        self.response = self.client.get(url)
+        self.assertEqual(self.response.status_code, 404)
+        self.assertEqual(type(self.response), HttpResponseNotFound)
+
+    def test_get_not_exist_article_pk_response(self):
+        url = reverse('webapp:article_view', kwargs={'pk': NOT_EXIST_PK})
+        self.response = self.client.get(url)
+        self.assertEqual(self.response.status_code, 404)
+        self.assertEqual(type(self.response), HttpResponseNotFound)
+
+    def test_get_not_exist_user_pk_response(self):
+        url = reverse('accounts:detail', kwargs={'pk': NOT_EXIST_PK})
+        self.response = self.client.get(url)
+        self.assertEqual(self.response.status_code, 404)
+        self.assertEqual(type(self.response), HttpResponseNotFound)
+

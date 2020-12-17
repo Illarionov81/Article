@@ -30,7 +30,6 @@ class UnLoginGetArticleJsonTestCase(TestCase):
     def test_article_success_data(self):
         url = reverse('api_v1:articles')
         self.response = self.client.get(url)
-        print(self.response)
         data = json.loads(self.response.content)
         self.assertTrue(len(data) >= 1)
         self.assertIn('pk', data[0])
