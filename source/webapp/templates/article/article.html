@@ -10,20 +10,21 @@
     <div class="box">
         <h4 class="pt-1 mt-1"><b>Title: {{ article.title }}.</b>
             {% if perms.webapp.change_article %}
-                <a href="{% url 'webapp:article_update' article.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
+                <a href="{% url 'webapp:article_update' article.pk %}" ><button type="button"  class="btn btn-success btn-sm">Update</button></a>
             {% endif %}
             {% if perms.webapp.delete_artycle  %}
-                <a href="{% url 'webapp:article_delete' article.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
+                <a href="{% url 'webapp:article_delete' article.pk %}" ><button type="button"  class="btn btn-danger btn-sm">Delete. </button></a>
             {% endif %}
         </h4>
-        <p>Description:</p>
-        <div class="box">
-            {{ article.description }}
+        <div class="box clearfix">
+
+            <h2 class="text-center">Description:</h2>
+              {% if  article.image  %}
+                <img class="float-sm-left m-2" src="{{ article.image.url }}" width="40%" height="40%" alt="Foto"><br>
+            {% else %}
+                <p>No Photo </p>
+            {% endif %}
+                {{ article.description | linebreaksbr}}
         </div>
-    {% if  article.image  %}
-        <img src="{{ article.image.url }}" width="100%" height="100%" alt="Foto"><br>
-    {% else %}
-    <p>No Photo </p>
-    {% endif %}
     </div>
 {% endblock %}

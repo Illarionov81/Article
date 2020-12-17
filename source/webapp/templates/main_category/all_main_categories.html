@@ -7,12 +7,14 @@
         {% for category in maincategory_list %}
             <div class="box float-sm-left article text-center">
                 <a href="{% url 'webapp:main_category_view' category.pk %}">
-                    <h5>№{{ category.pk }}. {{ category.title }}</h5></a><br>
+                    <h5>№{{ category.pk }}. {{ category.title }}</h5></a>
                 {% if perms.webapp.change_основная_категория %}
-                    <a href="{% url 'webapp:main_category_update' category.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
+                    <a href="{% url 'webapp:main_category_update' category.pk %}" >
+                        <button type="button"  class="btn btn-sm btn-success">Update</button></a>
                 {% endif %}
                 {% if perms.webapp.delete_основная_категория  %}
-                    <a href="{% url 'webapp:main_category_delete' category.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
+                    <a href="{% url 'webapp:main_category_delete' category.pk %}" >
+                        <button type="button"  class="btn btn-sm btn-danger">Delete. </button></a>
                 {% endif %}
             </div>
         {% endfor %}
