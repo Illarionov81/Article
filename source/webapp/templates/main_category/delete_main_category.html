@@ -16,7 +16,7 @@
         <form method="POST" action="{% url "webapp:main_category_delete" maincategory.pk %}" class="text-center">
             {% csrf_token %}
         <div class="coL col-lg-3 ml-5 mt-1">
-            {% if perms.webapp.delete_основная_категория  %}
+            {% if perms.webapp.delete_maincategory  %}
                 <a href="{% url "webapp:main_category_delete" maincategory.pk %}" >
                     <button type="submit"  class="btn btn-danger">Delete</button>
                 </a>

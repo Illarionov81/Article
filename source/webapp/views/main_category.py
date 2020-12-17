@@ -40,7 +40,7 @@ class MainCategoryUpdate(PermissionRequiredMixin, UpdateView):
     template_name = 'main_category/main_category_update.html'
     form_class = MainCategoryForm
     model = MainCategory
-    permission_required = 'webapp.change_основная_категория'
+    permission_required = 'webapp.change_maincategory'
 
     def get_success_url(self):
         return reverse('webapp:main_category_view', kwargs={'pk': self.object.pk})
@@ -50,4 +50,4 @@ class MainCategoryDelete(PermissionRequiredMixin, DeleteView):
     template_name = 'main_category/delete_main_category.html'
     model = MainCategory
     success_url = reverse_lazy('webapp:main_categories_view')
-    permission_required = 'webapp.delete_основная_категория'
+    permission_required = 'webapp.delete_maincategory'
