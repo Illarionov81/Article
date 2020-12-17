@@ -83,7 +83,7 @@
   "fields": {
     "title": "Test",
     "description": "Test",
-    "user_id": 3,
+    "user_id": 1,
     "image": "",
     "category_id": [
       9
