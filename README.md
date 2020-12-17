@@ -69,7 +69,7 @@
 Для автоматической прогонки имеющихся в приложении тестов используйте команду:
  * ```sourse$ ./manage.py test```
  
-# Для загрузки пользовательских фото положите папку uploads (/home/alex/documents/python/Article/source/uploads) в корень проекта - siurse
+# Для загрузки пользовательских фото положите папку [uploads](///home/alex/documents/python/Article/source/uploads) в корень проекта - siurse
 
 
 
