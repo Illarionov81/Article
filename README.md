@@ -59,15 +59,15 @@
 6. Проведите Мигрирую БД
  * ```cd source```
  * ```python manage.py migrate```
-7. Деактивируйте окружение
- * ```deactivate```
-8. Загрузите дамп
+7. Загрузите дамп
  * source$ ./manage.py loaddata fixtures/auth.json 
- * source$ ./manage.py loaddata fixtures/dump.json 
+ * source$ ./manage.py loaddata fixtures/dump.json
+8. Деактивируйте окружение
+ * ```deactivate``` 
  ----------------------------------------------------------------------------
 # Unit Tests
 Для автоматической прогонки имеющихся в приложении тестов используйте команду:
- * sourse$ ./manage.py test
+ * ```sourse$ ./manage.py test```
  
 
 
